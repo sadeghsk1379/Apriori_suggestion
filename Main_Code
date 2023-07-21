@@ -1,0 +1,30 @@
+from efficient_apriori import apriori
+user_course= dict()
+data = open("123.csv","r")
+while True:
+        c= data.readline()
+        if c=='':
+            break
+        user,course = c.split(',')
+        if user == 'UserId':
+            continue    
+        
+        course = course.strip()
+        user_course.setdefault(user, [])
+        user_course[user].append(course)
+data.close()
+values=[]
+
+for i in user_course:
+    values.append(user_course[i])
+lst_tuple =list(map(tuple, values))
+itemsets, rules = apriori(lst_tuple, min_support=0.001, min_confidence=0.9)
+file = open("rules.txt","w")
+for i in rules:
+    file.write( str(i) +'\n')
+    
+     
+
+
+    
+    
